@@ -5,15 +5,15 @@
 class GoPassboltCli < Formula
   desc "A CLI tool to interact with Passbolt, a Open source Password Manager for Teams"
   homepage "https://github.com/passbolt/go-passbolt-cli"
-  version "0.5.2"
+  version "0.5.3"
   license "MIT"
 
   on_macos do
-    on_intel do
-      url "https://github.com/passbolt/go-passbolt-cli/releases/download/v0.5.2/go-passbolt-cli_0.5.2_darwin_amd64.tar.gz"
-      sha256 "2cecf45165221a51d936152c850a7bfc8b97759d0427cddea560efc561c3ad02"
+    if Hardware::CPU.intel?
+      url "https://github.com/passbolt/go-passbolt-cli/releases/download/v0.5.3/go-passbolt-cli_0.5.3_darwin_amd64.tar.gz"
+      sha256 "170129241da6b48c0380154f2ad9b5c9f26884e3bd73d736c4958ea51b0eb04a"
 
-      def install
+      define_method(:install) do
         bin.install "passbolt"
         bash_completion.install "completion/bash" => "passbolt"
         zsh_completion.install "completion/zsh" => "_passbolt"
@@ -22,11 +22,11 @@ class GoPassboltCli < Formula
         # ...
       end
     end
-    on_arm do
-      url "https://github.com/passbolt/go-passbolt-cli/releases/download/v0.5.2/go-passbolt-cli_0.5.2_darwin_arm64.tar.gz"
-      sha256 "c5b7ee43ec581417b7ef3b401b66d28c520e87f070a809a909bfff247e310e2b"
+    if Hardware::CPU.arm?
+      url "https://github.com/passbolt/go-passbolt-cli/releases/download/v0.5.3/go-passbolt-cli_0.5.3_darwin_arm64.tar.gz"
+      sha256 "69cfaf9858c6f433fa5a18846316f0db5d7bf5a12d2797dd2b191b9ff04a4913"
 
-      def install
+      define_method(:install) do
         bin.install "passbolt"
         bash_completion.install "completion/bash" => "passbolt"
         zsh_completion.install "completion/zsh" => "_passbolt"
@@ -38,34 +38,28 @@ class GoPassboltCli < Formula
   end
 
   on_linux do
-    on_intel do
-      if Hardware::CPU.is_64_bit?
-        url "https://github.com/passbolt/go-passbolt-cli/releases/download/v0.5.2/go-passbolt-cli_0.5.2_linux_amd64.tar.gz"
-        sha256 "ee0a02734fb437314fbcf3051fd39d7592ded6cc67305b106a85bb4165052ee7"
-
-        def install
-          bin.install "passbolt"
-          bash_completion.install "completion/bash" => "passbolt"
-          zsh_completion.install "completion/zsh" => "_passbolt"
-          fish_completion.install "completion/fish" => "passbolt.fish"
-          man1.install Dir["man/*"]
-          # ...
-        end
+    if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
+      url "https://github.com/passbolt/go-passbolt-cli/releases/download/v0.5.3/go-passbolt-cli_0.5.3_linux_amd64.tar.gz"
+      sha256 "1ea6fa624de9a5c4a021c6ef75b448990c6e867ea45093a4789605cde3509c16"
+      define_method(:install) do
+        bin.install "passbolt"
+        bash_completion.install "completion/bash" => "passbolt"
+        zsh_completion.install "completion/zsh" => "_passbolt"
+        fish_completion.install "completion/fish" => "passbolt.fish"
+        man1.install Dir["man/*"]
+        # ...
       end
     end
-    on_arm do
-      if Hardware::CPU.is_64_bit?
-        url "https://github.com/passbolt/go-passbolt-cli/releases/download/v0.5.2/go-passbolt-cli_0.5.2_linux_arm64.tar.gz"
-        sha256 "b5c4312a1757b179e474c6de60e3add2fb96b986c441256af211bfda48402d62"
-
-        def install
-          bin.install "passbolt"
-          bash_completion.install "completion/bash" => "passbolt"
-          zsh_completion.install "completion/zsh" => "_passbolt"
-          fish_completion.install "completion/fish" => "passbolt.fish"
-          man1.install Dir["man/*"]
-          # ...
-        end
+    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+      url "https://github.com/passbolt/go-passbolt-cli/releases/download/v0.5.3/go-passbolt-cli_0.5.3_linux_arm64.tar.gz"
+      sha256 "9e4e2a8ec5d501cff74dedd8fa0265d41a559fe0ae0089210a8b23f8148265f0"
+      define_method(:install) do
+        bin.install "passbolt"
+        bash_completion.install "completion/bash" => "passbolt"
+        zsh_completion.install "completion/zsh" => "_passbolt"
+        fish_completion.install "completion/fish" => "passbolt.fish"
+        man1.install Dir["man/*"]
+        # ...
       end
     end
   end
